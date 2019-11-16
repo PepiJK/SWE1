@@ -1,0 +1,8 @@
+/home/josef/Nextcloud/Documents/FHTW/sem3/swe1/BIF-SWE1/Interfaces/bin/Debug/netcoreapp2.2/Interfaces.dll
+/home/josef/Nextcloud/Documents/FHTW/sem3/swe1/BIF-SWE1/Interfaces/bin/Debug/netcoreapp2.2/Interfaces.pdb
+/home/josef/Nextcloud/Documents/FHTW/sem3/swe1/BIF-SWE1/Interfaces/obj/Debug/netcoreapp2.2/Interfaces.csprojAssemblyReference.cache
+/home/josef/Nextcloud/Documents/FHTW/sem3/swe1/BIF-SWE1/Interfaces/obj/Debug/netcoreapp2.2/Interfaces.csproj.CoreCompileInputs.cache
+/home/josef/Nextcloud/Documents/FHTW/sem3/swe1/BIF-SWE1/Interfaces/obj/Debug/netcoreapp2.2/Interfaces.AssemblyInfoInputs.cache
+/home/josef/Nextcloud/Documents/FHTW/sem3/swe1/BIF-SWE1/Interfaces/obj/Debug/netcoreapp2.2/Interfaces.AssemblyInfo.cs
+/home/josef/Nextcloud/Documents/FHTW/sem3/swe1/BIF-SWE1/Interfaces/obj/Debug/netcoreapp2.2/Interfaces.dll
+/home/josef/Nextcloud/Documents/FHTW/sem3/swe1/BIF-SWE1/Interfaces/obj/Debug/netcoreapp2.2/Interfaces.pdb

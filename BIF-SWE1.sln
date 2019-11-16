@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BIF-SWE1", "BIF-SWE1\BIF-SWE1.csproj", "{7B9FF20C-C40D-4F62-B56F-748824A8E680}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Interfaces", "Interfaces\Interfaces.csproj", "{F77908B6-EB31-4AAB-981C-D71ACF8251A2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\UnitTests.csproj", "{C8C545E8-2AA0-4357-B43D-C5CB6C7D4F1E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7B9FF20C-C40D-4F62-B56F-748824A8E680}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7B9FF20C-C40D-4F62-B56F-748824A8E680}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7B9FF20C-C40D-4F62-B56F-748824A8E680}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7B9FF20C-C40D-4F62-B56F-748824A8E680}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F77908B6-EB31-4AAB-981C-D71ACF8251A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F77908B6-EB31-4AAB-981C-D71ACF8251A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F77908B6-EB31-4AAB-981C-D71ACF8251A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F77908B6-EB31-4AAB-981C-D71ACF8251A2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C8C545E8-2AA0-4357-B43D-C5CB6C7D4F1E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C8C545E8-2AA0-4357-B43D-C5CB6C7D4F1E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C8C545E8-2AA0-4357-B43D-C5CB6C7D4F1E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C8C545E8-2AA0-4357-B43D-C5CB6C7D4F1E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

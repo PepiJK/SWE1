@@ -1,0 +1,11 @@
+/home/josef/Nextcloud/Documents/FHTW/sem3/swe1/BIF-SWE1/UnitTests/obj/Debug/netcoreapp2.2/UnitTests.csprojAssemblyReference.cache
+/home/josef/Nextcloud/Documents/FHTW/sem3/swe1/BIF-SWE1/UnitTests/obj/Debug/netcoreapp2.2/UnitTests.csproj.CoreCompileInputs.cache
+/home/josef/Nextcloud/Documents/FHTW/sem3/swe1/BIF-SWE1/UnitTests/obj/Debug/netcoreapp2.2/UnitTests.AssemblyInfoInputs.cache
+/home/josef/Nextcloud/Documents/FHTW/sem3/swe1/BIF-SWE1/UnitTests/obj/Debug/netcoreapp2.2/UnitTests.AssemblyInfo.cs
+/home/josef/Nextcloud/Documents/FHTW/sem3/swe1/BIF-SWE1/UnitTests/bin/Debug/netcoreapp2.2/NUnit3.TestAdapter.dll
+/home/josef/Nextcloud/Documents/FHTW/sem3/swe1/BIF-SWE1/UnitTests/bin/Debug/netcoreapp2.2/NUnit3.TestAdapter.pdb
+/home/josef/Nextcloud/Documents/FHTW/sem3/swe1/BIF-SWE1/UnitTests/bin/Debug/netcoreapp2.2/nunit.engine.netstandard.dll
+/home/josef/Nextcloud/Documents/FHTW/sem3/swe1/BIF-SWE1/UnitTests/bin/Debug/netcoreapp2.2/UnitTests.dll
+/home/josef/Nextcloud/Documents/FHTW/sem3/swe1/BIF-SWE1/UnitTests/bin/Debug/netcoreapp2.2/UnitTests.pdb
+/home/josef/Nextcloud/Documents/FHTW/sem3/swe1/BIF-SWE1/UnitTests/obj/Debug/netcoreapp2.2/UnitTests.dll
+/home/josef/Nextcloud/Documents/FHTW/sem3/swe1/BIF-SWE1/UnitTests/obj/Debug/netcoreapp2.2/UnitTests.pdb
