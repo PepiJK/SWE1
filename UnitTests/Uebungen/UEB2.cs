@@ -15,19 +15,19 @@ namespace Uebungen
 
         public IUrl GetUrl(string path)
         {
-            var url = new Url(path);
+            IUrl url = new Url(path);
             return url;
         }
 
         public IRequest GetRequest(System.IO.Stream network)
         {
-            var req = new Request(network);
+            IRequest req = new Request(network);
             return req;
         }
 
         public IResponse GetResponse()
         {
-            var res = new Response();
+            IResponse res = new Response();
             return res;
         }
     }

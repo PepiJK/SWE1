@@ -16,7 +16,7 @@ namespace Uebungen
 
         public IUrl GetUrl(string path)
         {
-            var url = new Url(path);
+            IUrl url = new Url(path);
             return url;
         }
     }
