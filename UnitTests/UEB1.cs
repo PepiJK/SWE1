@@ -130,5 +130,53 @@ namespace BIF.SWE1.UnitTests
             Assert.That(obj.ParameterCount, Is.EqualTo(0));
         }
         #endregion
+
+        #region CustomTests
+        [Test]
+        public void url_should_parse_segments()
+        {
+            var obj = CreateInstance().GetUrl("/public/test.jpg");
+            Assert.That(obj, Is.Not.Null, "IUEB1.GetUrl returned null");
+
+            Assert.That(obj.Segments[0], Is.EqualTo("public"));
+            Assert.That(obj.Segments[1], Is.EqualTo("test.jpg"));
+        }
+        [Test]
+        public void url_should_parse_filename()
+        {
+            var obj = CreateInstance().GetUrl("/test.jpg");
+            Assert.That(obj, Is.Not.Null, "IUEB1.GetUrl returned null");
+
+            Assert.That(obj.FileName, Is.EqualTo("test.jpg"));
+        }
+        [Test]
+        public void url_should_parse_extension()
+        {
+            var obj = CreateInstance().GetUrl("/test.jpg");
+            Assert.That(obj, Is.Not.Null, "IUEB1.GetUrl returned null");
+
+            Assert.That(obj.Extension, Is.EqualTo(".jpg"));
+        }
+        [Test]
+        public void url_should_parse_fragment()
+        {
+            var obj = CreateInstance().GetUrl("/test.jpg#fragment1");
+            Assert.That(obj, Is.Not.Null, "IUEB1.GetUrl returned null");
+
+            Assert.That(obj.Fragment, Is.EqualTo("fragment1"));
+        }
+        [Test]
+        public void url_should_never_return_null()
+        {
+            var obj = CreateInstance().GetUrl(null);
+            Assert.That(obj, Is.Not.Null, "IUEB1.GetUrl returned null");
+
+            Assert.That(obj.Parameter, Is.Not.Null, "Parameter returned null");
+            Assert.That(obj.Segments, Is.Not.Null, "Segments returned null");
+            Assert.That(obj.FileName, Is.Not.Null, "Filename returned null");
+            Assert.That(obj.Extension, Is.Not.Null, "Extension returned null");
+            Assert.That(obj.Fragment, Is.Not.Null, "Fragment returned null");
+        }
+        #endregion
     }
 }

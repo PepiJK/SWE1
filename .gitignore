@@ -4,6 +4,9 @@
 # my files
 BIF-SWE1.dll
 BIF-SWE1.pdb
+UnitTests.dll
+UnitTests.pdb
+BIF-SWE1.assets.cache
 
 # User-specific files
 *.suo
