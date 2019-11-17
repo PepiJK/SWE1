@@ -13,35 +13,57 @@ namespace BIF_SWE1
         public string Method { get; }
         public IUrl Url { get; }
         public IDictionary<string, string> Headers { get; }
-        public string UserAgent { get; }
+
+        public string UserAgent
+        {
+            get
+            {
+                if (!Headers.ContainsKey("user-agent"))
+                {
+                    return null;
+                }
+                return Headers["user-agent"];
+            }
+        }
+
         public int HeaderCount { get; }
         public int ContentLength { get; }
 
-        public string ContentType { get; }
+        public string ContentType
+        {
+            get
+            {
+                if (!Headers.ContainsKey("content-type"))
+                {
+                    return null;
+                }
+                return Headers["content-type"];
+            }
+        }
 
         public Stream ContentStream { get; }
         public string ContentString { get; }
         public byte[] ContentBytes { get; }
-        
+
         private readonly string[] _validRequestMethods =
         {
             "GET", "HEAD", "POST", "PUT", "DELETE", "CONNECT", "OPTIONS", "TRACE", "PATCH"
         };
-        
+
         public Request(Stream network)
         {
             IsValid = false;
             Url = new Url(null);
             Headers = new Dictionary<string, string>();
             HeaderCount = 0;
-            
+
             // TODO: Request Body
             ContentStream = null;
             ContentString = null;
             ContentBytes = null;
-            
+
             // network stream is not empty
-            if ((int)network.Length > 1)
+            if ((int) network.Length > 1)
             {
                 // convert data from network stream to string
                 StreamReader reader = new StreamReader(network);
@@ -68,29 +90,20 @@ namespace BIF_SWE1
                             Headers[key] = value;
                         }
 
-                        if (Headers.ContainsKey("user-agent"))
-                        {
-                            UserAgent = Headers["user-agent"];
-                        }
-                    
-                        if (Headers.ContainsKey("content-type"))
-                        {
-                            ContentType = Headers["content-type"];
-                        }
-                        
                         IsValid = true;
                     }
                 }
             }
-            
+
             Console.WriteLine("-------------------------------");
             Console.WriteLine("IsValid: " + IsValid);
-            Console.Write("Headers:\n");
+            Console.Write("Headers: ");
             foreach (var head in Headers)
             {
-                Console.WriteLine(head.Key + ": " + head.Value);
+                Console.Write(head + " ");
             }
-            Console.WriteLine("HeaderCount: " + HeaderCount);
+
+            Console.WriteLine("\nHeaderCount: " + HeaderCount);
             Console.WriteLine("Method: " + Method);
             Console.WriteLine("User-Agent: " + UserAgent);
             Console.WriteLine("Content-Type: " + ContentType);

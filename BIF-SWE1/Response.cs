@@ -16,32 +16,26 @@ namespace BIF_SWE1
 
         public void SetContent(string content)
         {
-            
         }
 
         public void SetContent(byte[] content)
         {
-            
         }
 
         public void SetContent(Stream stream)
         {
-            
         }
 
         public void Send(Stream network)
         {
-            
         }
-        
+
         public void AddHeader(string header, string value)
         {
-            
         }
 
         public Response()
         {
-            
         }
     }
 }

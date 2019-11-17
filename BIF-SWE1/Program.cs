@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
@@ -13,7 +14,8 @@ namespace BIF_SWE1
         static void Main(string[] args)
         {
             Console.WriteLine("Hello World!");
-            // var url = new Url("http://8.8.8.8:8080/public/index.html?q=test&test=0#ancor1");
+            IUrl url = new Url("/test/public/index.html?q=test#ancor1");
+            
         }
     }
 }
