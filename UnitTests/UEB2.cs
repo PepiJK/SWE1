@@ -20,6 +20,7 @@ namespace BIF.SWE1.UnitTests
 
 
         #region Url
+
         [Test]
         public void url_should_create_with_path_fragment()
         {
@@ -45,11 +46,13 @@ namespace BIF.SWE1.UnitTests
             Assert.That(obj, Is.Not.Null, "IUEB2.GetUrl returned null");
 
             Assert.That(obj.Segments, Is.Not.Null);
-            Assert.That(obj.Segments, Is.EquivalentTo(new [] { "foo", "bar", "test.jpg" }));
+            Assert.That(obj.Segments, Is.EquivalentTo(new[] {"foo", "bar", "test.jpg"}));
         }
+
         #endregion
 
         #region Request
+
         // Basic tests
 
         [Test]
@@ -137,9 +140,11 @@ namespace BIF.SWE1.UnitTests
             Assert.That(obj.Url, Is.Not.Null);
             Assert.That(obj.Url.RawUrl, Is.EqualTo("/foo.html?a=1&b=2"));
         }
+
         #endregion
 
         #region Response
+
         // Basic tests
         [Test]
         public void response_hello_world()
@@ -154,7 +159,10 @@ namespace BIF.SWE1.UnitTests
             var obj = CreateInstance().GetResponse();
             Assert.That(obj, Is.Not.Null, "IUEB2.GetResponse returned null");
 
-            Assert.Throws(Is.InstanceOf<Exception>(), () => { var tmp = obj.StatusCode; });
+            Assert.Throws(Is.InstanceOf<Exception>(), () =>
+            {
+                var tmp = obj.StatusCode;
+            });
         }
 
         [Test]
@@ -224,6 +232,34 @@ namespace BIF.SWE1.UnitTests
             Assert.That(obj.Headers.ContainsKey("foo"), Is.True);
             Assert.That(obj.Headers["foo"], Is.EqualTo("override"));
         }
+
+        #endregion
+
+        #region CustomTests
+
+        [Test]
+        public void request_should_parse_body()
+        {
+            var obj = CreateInstance().GetRequest(RequestHelper.GetValidRequestStream("/", method: "POST", body:"q=query"));
+            Assert.That(obj, Is.Not.Null, "IUEB2.GetRequest returned null");
+            Assert.That(obj.IsValid, Is.True);
+            Assert.That(obj.Method, Is.EqualTo("POST"));
+            Assert.That(obj.ContentString, Is.EqualTo("q=query"));
+            Assert.That(obj.ContentBytes, Is.Not.Null);
+            Assert.That(obj.ContentStream, Is.Not.Null);
+        }
+        [Test]
+        public void request_should_parse_empty_body()
+        {
+            var obj = CreateInstance().GetRequest(RequestHelper.GetValidRequestStream("/", method: "POST"));
+            Assert.That(obj, Is.Not.Null, "IUEB2.GetRequest returned null");
+            Assert.That(obj.IsValid, Is.True);
+            Assert.That(obj.Method, Is.EqualTo("POST"));
+            Assert.That(obj.ContentString, Is.Null);
+            Assert.That(obj.ContentStream, Is.Null);
+            Assert.That(obj.ContentBytes, Is.Null);
+        }
+
         #endregion
     }
 }
