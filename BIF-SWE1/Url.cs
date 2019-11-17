@@ -42,7 +42,12 @@ namespace BIF_SWE1
                     Parameter[urlParams[0]] = urlParams[1];
                 }
             }
+            
+            DebugProperties();
+        }
 
+        private void DebugProperties()
+        {
             Console.WriteLine("-----------DEBUG-URL-----------");
             Console.WriteLine("RawUrl: " + RawUrl);
             Console.WriteLine("Path: " + Path);

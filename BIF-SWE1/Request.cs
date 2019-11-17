@@ -47,9 +47,9 @@ namespace BIF_SWE1
                 string[] reqLine = networkHeaderLines.First().Split(" ");
                 if (reqLine.Length == 3)
                 {
-                    Url = new Url(reqLine[1]);
                     Method = reqLine[0].ToUpper();
-
+                    Url = new Url(reqLine[1]);
+                    
                     // method is valid
                     if (_validRequestMethods.Contains(Method))
                     {
@@ -67,6 +67,11 @@ namespace BIF_SWE1
                 }
             }
 
+            DebugProperties();
+        }
+
+        private void DebugProperties()
+        {
             Console.WriteLine("-----------DEBUG-REQUEST-------");
             Console.WriteLine("IsValid: " + IsValid);
             Console.WriteLine("Method: " + Method);
