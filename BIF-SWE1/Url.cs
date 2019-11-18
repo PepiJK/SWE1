@@ -12,7 +12,7 @@ namespace BIF_SWE1
 
         public string RawUrl => _path ?? "";
         public string Path => RawUrl.Split("?").First().Split("#").First();
-        public IDictionary<string, string> Parameter { get; }
+        public IDictionary<string, string> Parameter { get; } = new Dictionary<string, string>();
         public int ParameterCount { get; }
         public string[] Segments => Path.Split("/", StringSplitOptions.RemoveEmptyEntries);
         public string FileName => Segments.Length > 0 && Segments.Last().Contains(".") ? Segments.Last() : "";
@@ -22,7 +22,6 @@ namespace BIF_SWE1
         public Url(string path)
         {
             _path = path;
-            Parameter = new Dictionary<string, string>();
             ParameterCount = 0;
             
             // process url parameters

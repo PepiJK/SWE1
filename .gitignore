@@ -7,6 +7,8 @@ BIF-SWE1.pdb
 UnitTests.dll
 UnitTests.pdb
 BIF-SWE1.assets.cache
+*.csproj.nuget.*
+project.assets.json
 
 # User-specific files
 *.suo

@@ -15,7 +15,7 @@ namespace BIF_SWE1
         public bool IsValid { get; }
         public string Method { get; }
         public IUrl Url { get; }
-        public IDictionary<string, string> Headers { get; }
+        public IDictionary<string, string> Headers { get; } = new Dictionary<string, string>();
         public string UserAgent => Headers.ContainsKey("user-agent") ? Headers["user-agent"] : null;
         public int HeaderCount { get; }
         public int ContentLength => Headers.ContainsKey("content-length") ? Int32.Parse(Headers["content-length"]) : 0;
@@ -27,8 +27,6 @@ namespace BIF_SWE1
         public Request(Stream network)
         {
             IsValid = false;
-            Headers = new Dictionary<string, string>();
-            HeaderCount = 0;
             ContentString = null;
 
             // network stream is not empty
