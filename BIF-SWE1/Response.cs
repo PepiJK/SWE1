@@ -66,6 +66,17 @@ namespace BIF_SWE1
                 StreamWriter sw = new StreamWriter(network);
                 sw.WriteLine("HTTP/1.1 " + Status);
                 sw.WriteLine("Server: " + ServerHeader);
+
+                if (ContentLength > 0)
+                {
+                    sw.WriteLine("Content-Length: " + ContentLength);
+                }
+
+                if (!String.IsNullOrEmpty(ContentType))
+                {
+                    sw.WriteLine("Content-Type: " + ContentType);
+                }
+
                 foreach (var header in Headers)
                 {
                     sw.WriteLine(header.Key + ": " + header.Value);
@@ -73,7 +84,11 @@ namespace BIF_SWE1
 
                 sw.WriteLine("");
 
-                sw.Write(Content);
+                if (!String.IsNullOrEmpty(Content))
+                {
+                    sw.Write(Content);
+                }
+
                 sw.Flush();
             }
             else
@@ -96,6 +111,7 @@ namespace BIF_SWE1
         {
             ContentLength = 0;
             StatusCodeIntern = 0;
+            
             // DebugProperties();
         }
 

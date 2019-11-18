@@ -65,7 +65,7 @@ namespace BIF_SWE1
                 }
             }
 
-            DebugProperties();
+            // DebugProperties();
         }
 
         private void DebugProperties()

@@ -14,8 +14,6 @@ namespace BIF_SWE1
         static void Main(string[] args)
         {
             Console.WriteLine("Hello World!");
-            IUrl url = new Url("/test/public/index.html?q=test#ancor1");
-            
         }
     }
 }

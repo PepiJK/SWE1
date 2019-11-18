@@ -27,7 +27,8 @@ namespace Uebungen
 
         public IPlugin GetTestPlugin()
         {
-            throw new NotImplementedException();
+            IPlugin plugin = new TestPlugin();
+            return plugin;
         }
     }
 }
