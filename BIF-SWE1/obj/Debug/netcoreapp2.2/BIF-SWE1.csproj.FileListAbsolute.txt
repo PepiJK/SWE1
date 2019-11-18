@@ -1,8 +1,0 @@
-/home/josef/Nextcloud/Documents/FHTW/sem3/swe1/BIF-SWE1/BIF-SWE1/bin/Debug/netcoreapp2.2/BIF-SWE1.dll
-/home/josef/Nextcloud/Documents/FHTW/sem3/swe1/BIF-SWE1/BIF-SWE1/bin/Debug/netcoreapp2.2/BIF-SWE1.pdb
-/home/josef/Nextcloud/Documents/FHTW/sem3/swe1/BIF-SWE1/BIF-SWE1/obj/Debug/netcoreapp2.2/BIF-SWE1.csprojAssemblyReference.cache
-/home/josef/Nextcloud/Documents/FHTW/sem3/swe1/BIF-SWE1/BIF-SWE1/obj/Debug/netcoreapp2.2/BIF-SWE1.csproj.CoreCompileInputs.cache
-/home/josef/Nextcloud/Documents/FHTW/sem3/swe1/BIF-SWE1/BIF-SWE1/obj/Debug/netcoreapp2.2/BIF-SWE1.AssemblyInfoInputs.cache
-/home/josef/Nextcloud/Documents/FHTW/sem3/swe1/BIF-SWE1/BIF-SWE1/obj/Debug/netcoreapp2.2/BIF-SWE1.AssemblyInfo.cs
-/home/josef/Nextcloud/Documents/FHTW/sem3/swe1/BIF-SWE1/BIF-SWE1/obj/Debug/netcoreapp2.2/BIF-SWE1.dll
-/home/josef/Nextcloud/Documents/FHTW/sem3/swe1/BIF-SWE1/BIF-SWE1/obj/Debug/netcoreapp2.2/BIF-SWE1.pdb
