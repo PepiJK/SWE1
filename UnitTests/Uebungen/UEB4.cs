@@ -15,7 +15,8 @@ namespace Uebungen
 
         public IPluginManager GetPluginManager()
         {
-            throw new NotImplementedException();
+            IPluginManager pluginManager = new PluginManager();
+            return pluginManager;
         }
 
         public IRequest GetRequest(System.IO.Stream network)
