@@ -106,26 +106,5 @@ namespace BIF_SWE1
 
             Headers.Add(header, value);
         }
-
-        public Response()
-        {
-            ContentLength = 0;
-            StatusCodeIntern = 0;
-            
-            // DebugProperties();
-        }
-
-        private void DebugProperties()
-        {
-            Console.WriteLine("---------DEBUG-RESPONSE----------");
-            Console.Write("Headers: ");
-            foreach (var head in Headers)
-            {
-                Console.Write(head);
-            }
-
-            Console.WriteLine("\nContentLength: " + ContentLength);
-            Console.WriteLine("ContentType" + ContentType);
-        }
     }
 }

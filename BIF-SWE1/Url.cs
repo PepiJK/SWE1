@@ -27,7 +27,7 @@ namespace BIF_SWE1
             // process url parameters
             string[] splitUrlQuestionmark = RawUrl.Split('?');
            
-            // url contains on ?
+            // url contains one ?
             if (splitUrlQuestionmark.Length == 2)
             {
                 // split at & and remove fragments

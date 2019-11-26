@@ -21,72 +21,54 @@ namespace BIF_SWE1
         public int ContentLength => Headers.ContainsKey("content-length") ? Int32.Parse(Headers["content-length"]) : 0;
         public string ContentType => Headers.ContainsKey("content-type") ? Headers["content-type"] : null;
         public Stream ContentStream => ContentBytes != null ? new MemoryStream(ContentBytes) : null;
-        public string ContentString { get; }
-        public byte[] ContentBytes => ContentString != null ? Encoding.UTF8.GetBytes(ContentString) : null;
+        public string ContentString => ContentBytes != null ? Encoding.UTF8.GetString(ContentBytes) : null;
+        public byte[] ContentBytes { get; }
 
         public Request(Stream network)
         {
             IsValid = false;
-            ContentString = null;
+            ContentBytes = null;
 
-            // network stream is not empty
-            if ((int) network.Length > 1)
+            StreamReader networkReader = new StreamReader(network, Encoding.UTF8);
+
+            if (networkReader.EndOfStream) return;
+
+            string networkLine;
+
+            if ((networkLine = networkReader.ReadLine()) != null)
             {
-                // convert data from network stream to string
-                StreamReader networkReader = new StreamReader(network);
-                string networkString = networkReader.ReadToEnd();
-
-                // get Header Lines and Body from the network String (split between header and body)
-                string[] networkHeaderLines = networkString.Split("\n\n").First().Split("\n");
-                string networkBody = networkString.Split("\n\n")[1];
-                ContentString = networkBody != "" ? networkBody : null;
-
-                // get first line of network stream (the request line) and check if its valid
-                string[] reqLine = networkHeaderLines.First().Split(" ");
+                string[] reqLine = networkLine.Split(" ");
                 if (reqLine.Length == 3)
                 {
                     Method = reqLine[0].ToUpper();
                     Url = new Url(reqLine[1]);
-                    
+
                     // method is valid
                     if (_validRequestMethods.Contains(Method))
                     {
-                        // get headers form network stream data skip first line was already processed
-                        foreach (var line in networkHeaderLines.Skip(1))
+                        IsValid = true;
+
+                        while (true)
                         {
+                            networkLine = networkReader.ReadLine().Trim();
+                            if (String.IsNullOrEmpty(networkLine)) break;
+
                             HeaderCount++;
-                            string key = line.Split(":").First().ToLower();
-                            string value = line.Split(":").Last().Trim();
+                            string key = networkLine.Split(": ").First().ToLower();
+                            string value = networkLine.Split(": ").Last();
                             Headers[key] = value;
                         }
 
-                        IsValid = true;
+                        // get body of request if content-length in header is set
+                        if (ContentLength > 0)
+                        {
+                            char[] body = new char[ContentLength];
+                            networkReader.Read(body, 0, ContentLength);
+                            ContentBytes = Encoding.UTF8.GetBytes(body);
+                        }
                     }
                 }
             }
-
-            // DebugProperties();
-        }
-
-        private void DebugProperties()
-        {
-            Console.WriteLine("-----------DEBUG-REQUEST-------");
-            Console.WriteLine("IsValid: " + IsValid);
-            Console.WriteLine("Method: " + Method);
-            Console.Write("Headers: ");
-            foreach (var head in Headers)
-            {
-                Console.Write(head + " ");
-            }
-
-            Console.WriteLine("\nUser-Agent: " + UserAgent);
-            Console.WriteLine("HeaderCount: " + HeaderCount);
-            Console.WriteLine("ContentLength: " + ContentLength);
-            Console.WriteLine("ContentType: " + ContentType);
-            Console.WriteLine("ContentStream: " + ContentStream);
-            Console.WriteLine("ContentString: " + ContentString);
-            Console.WriteLine("ContentBytes: " + ContentBytes);
-            Console.WriteLine("--------------------------------");
         }
     }
 }
