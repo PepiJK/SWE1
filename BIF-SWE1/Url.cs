@@ -23,12 +23,13 @@ namespace BIF_SWE1
         {
             _path = path;
             ParameterCount = 0;
-            
+
             // process url parameters
             string[] splitUrlQuestionmark = RawUrl.Split('?');
-           
-            // url contains one ?
-            if (splitUrlQuestionmark.Length == 2)
+
+            // url contains one ? and is not empty or null before and after ?
+            if (splitUrlQuestionmark.Length == 2 && !String.IsNullOrEmpty(splitUrlQuestionmark[0]) &&
+                !String.IsNullOrEmpty(splitUrlQuestionmark[1]))
             {
                 // split at & and remove fragments
                 string[] splitUrlParams = splitUrlQuestionmark[1].Split("&");
@@ -36,37 +37,12 @@ namespace BIF_SWE1
 
                 foreach (var param in splitUrlParams)
                 {
-                    ParameterCount++;
                     string[] urlParams = param.Split("=");
+                    if (urlParams.Length != 2) break;
+                    ParameterCount++;
                     Parameter[urlParams[0]] = urlParams[1];
                 }
             }
-            
-            // DebugProperties();
-        }
-
-        private void DebugProperties()
-        {
-            Console.WriteLine("-----------DEBUG-URL-----------");
-            Console.WriteLine("RawUrl: " + RawUrl);
-            Console.WriteLine("Path: " + Path);
-            Console.Write("Parameter: ");
-            foreach (var param in Parameter)
-            {
-                Console.Write(param + " ");
-            }
-
-            Console.WriteLine("\nParameterCount: " + ParameterCount);
-            Console.Write("Segments: ");
-            foreach (var seg in Segments)
-            {
-                Console.Write(seg + " ");
-            }
-
-            Console.WriteLine("\nFilename: " + FileName);
-            Console.WriteLine("Extension: " + Extension);
-            Console.WriteLine("Fragment: " + Fragment);
-            Console.WriteLine("-------------------------------");
         }
     }
 }

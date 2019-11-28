@@ -48,6 +48,7 @@ namespace BIF_SWE1
                     {
                         IsValid = true;
 
+                        // read each line of req till empty line
                         while (true)
                         {
                             networkLine = networkReader.ReadLine().Trim();

@@ -18,7 +18,7 @@ namespace BIF_SWE1
         {
             Console.WriteLine("BIF-SWE1 WebServer");
             TcpListener listener = new TcpListener(IPAddress.Any, Port);
-            Console.WriteLine($"Listening on Port " + Port + "...");
+            Console.WriteLine("Listening on Port " + Port + "...");
             listener.Start();
 
             while (true)
@@ -32,27 +32,70 @@ namespace BIF_SWE1
         private static void Listen(Socket s)
         {
             Console.WriteLine("New Client connected");
+            PluginManager pluginManager = new PluginManager();
+
             using (NetworkStream stream = new NetworkStream(s))
             {
-                Request req = new Request(stream);
-                Response res = new Response();
-
-                if (req.IsValid)
+                Response res = null;
+                try
                 {
+                    Request req = new Request(stream);
+
+                    if (!req.IsValid)
+                    {
+                        res = new Response {StatusCode = 400};
+                        res.ContentType = "text/html; charset=UTF-8";
+                        res.SetContent(res.Status);
+                        res.Send(stream);
+                    }
+                    else
+                    {
+                        IPlugin selectedPlugin = null;
+                        float maxScore = 0.0f;
+                        foreach (var plugin in pluginManager.Plugins)
+                        {
+                            var score = plugin.CanHandle(req);
+                            if (score > maxScore)
+                            {
+                                maxScore = score;
+                                selectedPlugin = plugin;
+                            }
+                        }
+
+                        if (selectedPlugin != null)
+                        {
+                            res = selectedPlugin.Handle(req) as Response;
+                            if (res != null)
+                            {
+                                res.Send(stream);
+                            }
+                            else
+                            {
+                                res = new Response {StatusCode = 500};
+                                res.ContentType = "text/html; charset=UTF-8";
+                                res.SetContent(res.Status);
+                                res.Send(stream);
+                            }
+                        }
+                        else
+                        {
+                            res = new Response {StatusCode = 501};
+                            res.ContentType = "text/html; charset=UTF-8";
+                            res.SetContent(res.Status);
+                            res.Send(stream);
+                        }
+                    }
+                }
+                
+                catch (Exception e)
+                {
+                    res = new Response {StatusCode = 500};
                     res.ContentType = "text/html; charset=UTF-8";
-                    res.SetContent("<html><body><h1>200 SUCCESS Request is Valid</h1></body></html>");
-                    res.StatusCode = 200;
+                    res.SetContent("<pre>" + e + "</pre>");
                     res.Send(stream);
                 }
-                else
-                {
-                    res.ContentType = "text/html; charset=UTF-8";
-                    res.SetContent("<html><body><h1>500 ERROR Request not Valid</h1></body></html>");
-                    res.StatusCode = 500;
-                    res.Send(stream);
-                }
 
-                Console.WriteLine("Status: " + res.StatusCode);
+                Console.WriteLine("Status: " + res.Status);
                 stream.Close();
             }
         }
