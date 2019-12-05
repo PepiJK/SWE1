@@ -24,15 +24,15 @@ namespace BIF_SWE1
             while (true)
             {
                 Socket s = listener.AcceptSocket();
-                Thread thread = new Thread(() => Listen(s));
+                PluginManager pluginManager = new PluginManager();
+                Thread thread = new Thread(() => Listen(s, pluginManager));
                 thread.Start();
             }
         }
 
-        private static void Listen(Socket s)
+        private static void Listen(Socket s, PluginManager pluginManager)
         {
             Console.WriteLine("New Client connected");
-            PluginManager pluginManager = new PluginManager();
 
             using (NetworkStream stream = new NetworkStream(s))
             {
@@ -86,7 +86,7 @@ namespace BIF_SWE1
                         }
                     }
                 }
-                
+
                 catch (Exception e)
                 {
                     res = new Response {StatusCode = 500};
