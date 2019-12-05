@@ -15,20 +15,20 @@ namespace Uebungen
 
         public IRequest GetRequest(System.IO.Stream network)
         {
-            IRequest req = new Request(network);
+            var req = new Request(network);
             return req;
         }
 
         public IResponse GetResponse()
         {
-            IResponse res = new Response();
+            var res = new Response();
             return res;
         }
 
         public IPlugin GetTestPlugin()
         {
-            IPlugin plugin = new TestPlugin();
-            return plugin;
+            var pluginManager = new PluginManager();
+            return pluginManager.GetSpecificPlugin("TestPlugin");
         }
     }
 }

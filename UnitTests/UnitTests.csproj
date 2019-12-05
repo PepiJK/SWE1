@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>netcoreapp2.2</TargetFramework>
+        <TargetFramework>netcoreapp3.0</TargetFramework>
 
         <IsPackable>false</IsPackable>
     </PropertyGroup>
@@ -15,6 +15,7 @@
     <ItemGroup>
       <ProjectReference Include="..\BIF-SWE1\BIF-SWE1.csproj" />
       <ProjectReference Include="..\Interfaces\Interfaces.csproj" />
+      <ProjectReference Include="..\Plugins\TestPlugin\TestPlugin.csproj" />
     </ItemGroup>
 
 </Project>
