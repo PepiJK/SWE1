@@ -8,6 +8,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\Unit
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestPlugin", "Plugins\TestPlugin\TestPlugin.csproj", "{E7DF123A-237B-4F72-BEEC-4E9E43450E0D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StaticFilePlugin", "Plugins\StaticFilePlugin\StaticFilePlugin.csproj", "{AF8BF80D-CCF6-4538-ABE2-F62B4287CABB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +32,9 @@ Global
 		{E7DF123A-237B-4F72-BEEC-4E9E43450E0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E7DF123A-237B-4F72-BEEC-4E9E43450E0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E7DF123A-237B-4F72-BEEC-4E9E43450E0D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AF8BF80D-CCF6-4538-ABE2-F62B4287CABB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF8BF80D-CCF6-4538-ABE2-F62B4287CABB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AF8BF80D-CCF6-4538-ABE2-F62B4287CABB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF8BF80D-CCF6-4538-ABE2-F62B4287CABB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

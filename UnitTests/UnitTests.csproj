@@ -4,6 +4,8 @@
         <TargetFramework>netcoreapp3.0</TargetFramework>
 
         <IsPackable>false</IsPackable>
+
+        <AssemblyName>BIF-SWE1.UnitTests</AssemblyName>
     </PropertyGroup>
 
     <ItemGroup>
@@ -15,6 +17,7 @@
     <ItemGroup>
       <ProjectReference Include="..\BIF-SWE1\BIF-SWE1.csproj" />
       <ProjectReference Include="..\Interfaces\Interfaces.csproj" />
+      <ProjectReference Include="..\Plugins\StaticFilePlugin\StaticFilePlugin.csproj" />
       <ProjectReference Include="..\Plugins\TestPlugin\TestPlugin.csproj" />
     </ItemGroup>
 

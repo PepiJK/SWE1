@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using BIF.SWE1.Interfaces;
 using BIF_SWE1;
+using NUnit.Framework.Internal;
 
 namespace Uebungen
 {
@@ -27,8 +30,8 @@ namespace Uebungen
 
         public IPlugin GetTestPlugin()
         {
-            var pluginManager = new PluginManager();
-            return pluginManager.GetSpecificPlugin("TestPlugin");
+            var testPlugin = new TestPlugin.TestPlugin() as IPlugin;
+            return testPlugin;
         }
     }
 }

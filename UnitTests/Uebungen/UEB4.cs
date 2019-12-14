@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using BIF.SWE1.Interfaces;
 using BIF_SWE1;
+using TestPlugin;
 
 namespace Uebungen
 {
@@ -16,6 +17,7 @@ namespace Uebungen
         public IPluginManager GetPluginManager()
         {
             IPluginManager pluginManager = new PluginManager();
+            pluginManager.Add(new TestPlugin.TestPlugin());
             return pluginManager;
         }
 

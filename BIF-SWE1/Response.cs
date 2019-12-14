@@ -16,6 +16,13 @@ namespace BIF_SWE1
             {500, "500 Internal Server Error"}, {501, "501 Not Implemented"}
         };
 
+        public readonly IDictionary<string, string> ValidContentTypes = new Dictionary<string, string>()
+        {
+            {"html", "text/html; charset=UTF-8"}, {"txt", "text/plain"}, {"css", "text/css"}, {"png", "image/png"},
+            {"gif", "image/gif"}, {"jpg", "image/jpeg"}, {"pdf", "application/pdf"}, {"json", "application/json"},
+            {"js", "application/javascript"}
+        };
+
         private int StatusCodeIntern { get; set; }
         private string Content { get; set; }
 
@@ -65,8 +72,11 @@ namespace BIF_SWE1
             if (!String.IsNullOrEmpty(Status))
             {
                 StreamWriter sw = new StreamWriter(network);
+
                 sw.WriteLine("HTTP/1.1 " + Status);
                 sw.WriteLine("Server: " + ServerHeader);
+                // important to set Connection: close header, otherwise files won't load
+                sw.WriteLine("Connection: close");
 
                 if (ContentLength > 0)
                 {

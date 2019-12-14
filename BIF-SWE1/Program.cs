@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Net.Sockets;
-using System.Text;
 using System.Threading;
 using BIF.SWE1.Interfaces;
 
@@ -13,6 +10,7 @@ namespace BIF_SWE1
     class Program
     {
         private const int Port = 8080;
+        private static PluginManager PluginManager { get; set; } = new PluginManager();
 
         static void Main(string[] args)
         {
@@ -24,16 +22,14 @@ namespace BIF_SWE1
             while (true)
             {
                 Socket s = listener.AcceptSocket();
-                PluginManager pluginManager = new PluginManager();
-                Thread thread = new Thread(() => Listen(s, pluginManager));
+                Thread thread = new Thread(() => Listen(s));
                 thread.Start();
             }
         }
 
-        private static void Listen(Socket s, PluginManager pluginManager)
+        private static void Listen(Socket s)
         {
             Console.WriteLine("New Client connected");
-
             using (NetworkStream stream = new NetworkStream(s))
             {
                 Response res = null;
@@ -41,62 +37,52 @@ namespace BIF_SWE1
                 {
                     Request req = new Request(stream);
 
-                    if (!req.IsValid)
+                    IPlugin selectedPlugin = null;
+                    float maxScore = 0.0f;
+                    foreach (var plugin in PluginManager.Plugins)
                     {
-                        res = new Response {StatusCode = 400};
-                        res.ContentType = "text/html; charset=UTF-8";
-                        res.SetContent(res.Status);
-                        res.Send(stream);
-                    }
-                    else
-                    {
-                        IPlugin selectedPlugin = null;
-                        float maxScore = 0.0f;
-                        foreach (var plugin in pluginManager.Plugins)
+                        var score = plugin.CanHandle(req);
+                        if (score > maxScore)
                         {
-                            var score = plugin.CanHandle(req);
-                            if (score > maxScore)
-                            {
-                                maxScore = score;
-                                selectedPlugin = plugin;
-                            }
+                            maxScore = score;
+                            selectedPlugin = plugin;
                         }
+                    }
 
-                        if (selectedPlugin != null)
+
+                    if (selectedPlugin != null)
+                    {
+                        res = selectedPlugin.Handle(req) as Response;
+                        if (res != null)
                         {
-                            res = selectedPlugin.Handle(req) as Response;
-                            if (res != null)
-                            {
-                                res.Send(stream);
-                            }
-                            else
-                            {
-                                res = new Response {StatusCode = 500};
-                                res.ContentType = "text/html; charset=UTF-8";
-                                res.SetContent(res.Status);
-                                res.Send(stream);
-                            }
+                            res.Send(stream);
                         }
                         else
                         {
-                            res = new Response {StatusCode = 501};
-                            res.ContentType = "text/html; charset=UTF-8";
+                            res = new Response {StatusCode = 500};
+                            res.ContentType = res.ValidContentTypes["txt"];
                             res.SetContent(res.Status);
                             res.Send(stream);
                         }
+                    }
+                    else
+                    {
+                        res = new Response {StatusCode = 501};
+                        res.ContentType = res.ValidContentTypes["txt"];
+                        res.SetContent(res.Status);
+                        res.Send(stream);
                     }
                 }
 
                 catch (Exception e)
                 {
+                    Console.WriteLine(e);
                     res = new Response {StatusCode = 500};
-                    res.ContentType = "text/html; charset=UTF-8";
-                    res.SetContent("<pre>" + e + "</pre>");
+                    res.ContentType = res.ValidContentTypes["txt"];
                     res.Send(stream);
                 }
 
                 Console.WriteLine("Status: " + res.Status);
-                stream.Close();
             }
         }
     }

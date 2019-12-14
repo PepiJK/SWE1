@@ -33,10 +33,10 @@ namespace BIF_SWE1
             _plugins.Clear();
         }
 
-        public PluginManager(string pluginsPath = "../../../../Plugins")
+        public PluginManager(string pluginsPath = "./plugins")
         {
             _pluginPath = pluginsPath;
-            
+
             if (File.Exists(pluginsPath)) throw new Exception("Expected directory, not a file");
             if (!Directory.Exists(pluginsPath))
                 throw new Exception("Directory \"" + Path.GetFullPath(pluginsPath) + "\" does not exist");
@@ -55,9 +55,8 @@ namespace BIF_SWE1
             }
         }
 
-        public IPlugin GetSpecificPlugin(string pluginName)
+        public IPlugin GetSpecificPlugin(string pluginPath)
         {
-            string pluginPath = _pluginPath + "/" + pluginName + ".dll";
             Assembly pluginAssembly = LoadPlugin(pluginPath);
             return CreatePlugins(pluginAssembly).First();
         }

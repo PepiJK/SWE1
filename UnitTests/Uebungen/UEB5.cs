@@ -16,28 +16,31 @@ namespace Uebungen
         public IPluginManager GetPluginManager()
         {
             IPluginManager pluginManager = new PluginManager();
+            pluginManager.Add(new TestPlugin.TestPlugin());
+            pluginManager.Add(new StaticFilePlugin.StaticFilePlugin());
             return pluginManager;
         }
 
         public IRequest GetRequest(System.IO.Stream network)
         {
-            IRequest req = new Request(network);
+            Request req = new Request(network);
             return req;
         }
 
         public IPlugin GetStaticFilePlugin()
         {
-            throw new NotImplementedException();
+            var staticFilePlugin = new StaticFilePlugin.StaticFilePlugin() as IPlugin;
+            return staticFilePlugin;
         }
 
         public string GetStaticFileUrl(string fileName)
         {
-            throw new NotImplementedException();
+            Url url = new Url("/" + fileName);
+            return url.RawUrl;
         }
 
         public void SetStatiFileFolder(string folder)
         {
-            throw new NotImplementedException();
         }
     }
 }
