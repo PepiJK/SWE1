@@ -34,6 +34,7 @@ namespace TestPlugin
                 {
                     var resp = new Response {StatusCode = 200};
                     resp.SetContent("Valid Request for Segment test or Parameter Key test_plugin");
+                    resp.ContentType = resp.ValidContentTypes["txt"];
                     return resp;
                 }
 
@@ -41,12 +42,14 @@ namespace TestPlugin
                 {
                     var resp = new Response {StatusCode = 200};
                     resp.SetContent("Valid Request for Url /");
+                    resp.ContentType = resp.ValidContentTypes["txt"];
                     return resp;
                 }
             }
 
             var res = new Response {StatusCode = 500};
             res.SetContent("TestPlugin Cannot Handle Request");
+            res.ContentType = res.ValidContentTypes["txt"];
             return res;
         }
     }
