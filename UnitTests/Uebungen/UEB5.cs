@@ -18,6 +18,7 @@ namespace Uebungen
             IPluginManager pluginManager = new PluginManager();
             pluginManager.Add(new TestPlugin.TestPlugin());
             pluginManager.Add(new StaticFilePlugin.StaticFilePlugin());
+            pluginManager.Add(new ToLower.ToLower());
             return pluginManager;
         }
 

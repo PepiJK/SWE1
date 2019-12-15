@@ -19,6 +19,7 @@
       <ProjectReference Include="..\Interfaces\Interfaces.csproj" />
       <ProjectReference Include="..\Plugins\StaticFilePlugin\StaticFilePlugin.csproj" />
       <ProjectReference Include="..\Plugins\TestPlugin\TestPlugin.csproj" />
+      <ProjectReference Include="..\ToLower\ToLower.csproj" />
     </ItemGroup>
 
 </Project>
