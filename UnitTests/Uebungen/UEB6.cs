@@ -19,7 +19,7 @@ namespace Uebungen
             IPluginManager pluginManager = new PluginManager();
             pluginManager.Add(new TestPlugin.TestPlugin());
             pluginManager.Add(new StaticFilePlugin.StaticFilePlugin());
-            pluginManager.Add(new ToLower.ToLower());
+            pluginManager.Add(new ToLowerPlugin.ToLowerPlugin());
             return pluginManager;
         }
 
@@ -61,7 +61,7 @@ namespace Uebungen
 
         public IPlugin GetToLowerPlugin()
         {
-            var toLowerPlugin = new ToLower.ToLower() as IPlugin;
+            var toLowerPlugin = new ToLowerPlugin.ToLowerPlugin() as IPlugin;
             return toLowerPlugin;
         }
 

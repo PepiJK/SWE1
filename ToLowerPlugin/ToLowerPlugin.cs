@@ -3,9 +3,9 @@ using System.IO;
 using BIF.SWE1.Interfaces;
 using BIF_SWE1;
 
-namespace ToLower
+namespace ToLowerPlugin
 {
-    public class ToLower : IPlugin
+    public class ToLowerPlugin : IPlugin
     {
         public float CanHandle(IRequest req)
         {

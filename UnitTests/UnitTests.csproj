@@ -21,7 +21,7 @@
       <ProjectReference Include="..\StaticFilePlugin\StaticFilePlugin.csproj" />
       <ProjectReference Include="..\TestPlugin\TestPlugin.csproj" />
       <ProjectReference Include="..\TempPlugin\TempPlugin.csproj" />
-      <ProjectReference Include="..\ToLower\ToLower.csproj" />
+      <ProjectReference Include="..\ToLowerPlugin\ToLowerPlugin.csproj" />
     </ItemGroup>
 
 </Project>
