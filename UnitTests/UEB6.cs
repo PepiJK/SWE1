@@ -140,6 +140,7 @@ namespace BIF.SWE1.UnitTests
             Assert.That(resp.ContentType, Is.EqualTo("text/xml"));
             Assert.That(resp.ContentLength, Is.GreaterThan(0));
         }
+        
         #endregion
         
         #region Navi-Plugin tests

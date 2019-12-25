@@ -36,9 +36,9 @@ namespace BIF_SWE1
                 try
                 {
                     Request req = new Request(stream);
-
                     IPlugin selectedPlugin = null;
                     float maxScore = 0.0f;
+                    
                     foreach (var plugin in PluginManager.Plugins)
                     {
                         var score = plugin.CanHandle(req);
@@ -48,7 +48,6 @@ namespace BIF_SWE1
                             selectedPlugin = plugin;
                         }
                     }
-
 
                     if (selectedPlugin != null)
                     {

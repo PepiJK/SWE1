@@ -5,8 +5,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\BIF-SWE1\BIF-SWE1.csproj" />
-      <ProjectReference Include="..\..\Interfaces\Interfaces.csproj" />
+      <ProjectReference Include="..\BIF-SWE1\BIF-SWE1.csproj" />
+      <ProjectReference Include="..\Interfaces\Interfaces.csproj" />
     </ItemGroup>
 
 </Project>

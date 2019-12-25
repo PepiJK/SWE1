@@ -9,6 +9,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="Npgsql" Version="4.1.2" />
         <PackageReference Include="nunit" Version="3.11.0" />
         <PackageReference Include="NUnit3TestAdapter" Version="3.11.0" />
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.9.0" />
@@ -17,8 +18,9 @@
     <ItemGroup>
       <ProjectReference Include="..\BIF-SWE1\BIF-SWE1.csproj" />
       <ProjectReference Include="..\Interfaces\Interfaces.csproj" />
-      <ProjectReference Include="..\Plugins\StaticFilePlugin\StaticFilePlugin.csproj" />
-      <ProjectReference Include="..\Plugins\TestPlugin\TestPlugin.csproj" />
+      <ProjectReference Include="..\StaticFilePlugin\StaticFilePlugin.csproj" />
+      <ProjectReference Include="..\TestPlugin\TestPlugin.csproj" />
+      <ProjectReference Include="..\TempPlugin\TempPlugin.csproj" />
       <ProjectReference Include="..\ToLower\ToLower.csproj" />
     </ItemGroup>
 

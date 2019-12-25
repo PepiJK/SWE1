@@ -19,6 +19,7 @@ namespace Uebungen
             pluginManager.Add(new TestPlugin.TestPlugin());
             pluginManager.Add(new StaticFilePlugin.StaticFilePlugin());
             pluginManager.Add(new ToLower.ToLower());
+            pluginManager.Add(new TempPlugin.TempPlugin());
             return pluginManager;
         }
 
