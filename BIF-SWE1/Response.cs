@@ -13,7 +13,7 @@ namespace BIF_SWE1
         private readonly IDictionary<int, string> _validStatusCodes = new Dictionary<int, string>()
         {
             {200, "200 OK"}, {400, "400 Bad Request"}, {404, "404 Not Found"}, {420, "420 Requests Too High"},
-            {500, "500 Internal Server Error"}, {501, "501 Not Implemented"}
+            {500, "500 Internal Server Error"}, {503, "503 Service Unavailable"}, {501, "501 Not Implemented"}
         };
 
         public readonly IDictionary<string, string> ValidContentTypes = new Dictionary<string, string>()

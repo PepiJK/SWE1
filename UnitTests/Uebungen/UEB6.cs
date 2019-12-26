@@ -20,6 +20,7 @@ namespace Uebungen
             pluginManager.Add(new TestPlugin.TestPlugin());
             pluginManager.Add(new StaticFilePlugin.StaticFilePlugin());
             pluginManager.Add(new ToLowerPlugin.ToLowerPlugin());
+            pluginManager.Add(new NaviPlugin.NaviPlugin());
             return pluginManager;
         }
 
@@ -31,12 +32,13 @@ namespace Uebungen
 
         public string GetNaviUrl()
         {
-            throw new NotImplementedException();
+            return "/navi";
         }
 
         public IPlugin GetNavigationPlugin()
         {
-            throw new NotImplementedException();
+            var naviPlugin = new NaviPlugin.NaviPlugin() as IPlugin;
+            return naviPlugin;
         }
 
         public IPlugin GetTemperaturePlugin()

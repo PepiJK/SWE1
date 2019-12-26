@@ -10,14 +10,14 @@ namespace TempPlugin
 {
     public class TempPlugin : IPlugin
     {
-        private readonly string _Url = "/temperature";
-        private TempController _tempController = new TempController();
+        private const string Url = "/temperature";
+        private readonly TempController _tempController = new TempController();
 
         public float CanHandle(IRequest req)
         {
             if (!req.IsValid) return 0.0f;
             if (req.Method != "GET") return 0.0f;
-            if (!req.Url.Path.Contains(_Url)) return 0.0f;
+            if (!req.Url.Path.Contains(Url)) return 0.0f;
             if (req.Url.Segments.Length < 2) return 0.0f;
             if (req.Url.Segments[1] == "html") return 0.9f;
             if (req.Url.Segments[1] == "json") return 1.0f;
@@ -34,6 +34,7 @@ namespace TempPlugin
             if (req.Url.Segments[1] == "html")
             {
                 // html temp plugin is handled via the static file plugin (returns the temperature.html)
+                // this is only for the unit test
                 resp.StatusCode = 200;
                 resp.SetContent(resp.Status);
                 resp.ContentType = resp.ValidContentTypes["html"];

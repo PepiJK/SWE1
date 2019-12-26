@@ -14,6 +14,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestPlugin", "TestPlugin\Te
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToLowerPlugin", "ToLowerPlugin\ToLowerPlugin.csproj", "{D6001771-3217-459E-838A-E4D046DE2A0D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NaviPlugin", "NaviPlugin\NaviPlugin.csproj", "{D687BAF5-50EB-4C2D-8391-B4513F76AFE1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -48,5 +50,9 @@ Global
 		{D6001771-3217-459E-838A-E4D046DE2A0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D6001771-3217-459E-838A-E4D046DE2A0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D6001771-3217-459E-838A-E4D046DE2A0D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D687BAF5-50EB-4C2D-8391-B4513F76AFE1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D687BAF5-50EB-4C2D-8391-B4513F76AFE1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D687BAF5-50EB-4C2D-8391-B4513F76AFE1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D687BAF5-50EB-4C2D-8391-B4513F76AFE1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

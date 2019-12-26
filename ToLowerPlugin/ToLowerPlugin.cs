@@ -22,7 +22,7 @@ namespace ToLowerPlugin
             resp.StatusCode = 200;
 
             String[] respString = req.ContentString.Split("=", StringSplitOptions.RemoveEmptyEntries);
-            resp.SetContent(respString.Length > 1 ? respString[1].ToLower() : "Bitte geben Sie einen Text ein");
+            resp.SetContent(respString.Length == 2 ? respString[1].ToLower() : "Bitte geben Sie einen Text ein");
             resp.ContentType = resp.ValidContentTypes["txt"];
             
             return resp;

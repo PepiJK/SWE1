@@ -18,6 +18,7 @@
     <ItemGroup>
       <ProjectReference Include="..\BIF-SWE1\BIF-SWE1.csproj" />
       <ProjectReference Include="..\Interfaces\Interfaces.csproj" />
+      <ProjectReference Include="..\NaviPlugin\NaviPlugin.csproj" />
       <ProjectReference Include="..\StaticFilePlugin\StaticFilePlugin.csproj" />
       <ProjectReference Include="..\TestPlugin\TestPlugin.csproj" />
       <ProjectReference Include="..\TempPlugin\TempPlugin.csproj" />

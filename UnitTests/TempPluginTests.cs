@@ -1,16 +1,46 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Linq;
+using System.Text;
+using System.Text.Json;
+using BIF.SWE1.Interfaces;
 using Npgsql;
 using NUnit.Framework;
 using TempPlugin;
 
 namespace BIF.SWE1.UnitTests
 {
+    public class TempsPaginatedListJson
+    {
+        public int TotalPages { get; set; }
+        public int PageIndex { get; set; }
+        public int PageSize { get; set; }
+        public IEnumerable<TempModel> Items { get; set; }
+        public int Skip { get; set; }    
+    }
+    
     [TestFixture]
     public class TempPluginTests : AbstractTestFixture<Uebungen.UEB6>
     {
+        private static StringBuilder GetBody(IResponse resp)
+        {
+            StringBuilder body = new StringBuilder();
+            using (var ms = new MemoryStream())
+            {
+                resp.Send(ms);
+                ms.Seek(0, SeekOrigin.Begin);
+                var sr = new StreamReader(ms);
+                while (!sr.EndOfStream)
+                {
+                    body.AppendLine(sr.ReadLine());
+                }
+            }
+
+            return body;
+        }
+        
         private readonly string _dbConnectionString = "Host=localhost;Username=swe;Password=123456;Database=webserver_test";
 
         [Test]
@@ -56,6 +86,149 @@ namespace BIF.SWE1.UnitTests
             Assert.That(resp.ContentType, Is.EqualTo("application/json"));
             Assert.That(resp.ContentLength, Is.GreaterThan(0));
         }
+
+        [Test]
+        public void temp_plugin_return_all_temps_as_paginated_list()
+        {
+            var ueb = CreateInstance();
+            var plugin = ueb.GetTemperaturePlugin();
+            Assert.That(plugin, Is.Not.Null, "IUEB6.GetTemperaturePlugin returned null");
+            var url = "/temperature/json";
+
+            var req = ueb.GetRequest(RequestHelper.GetValidRequestStream(url));
+            Assert.That(req, Is.Not.Null, "IUEB6.GetRequest returned null");
+
+            Assert.That(plugin.CanHandle(req), Is.GreaterThan(0).And.LessThanOrEqualTo(1));
+
+            var resp = plugin.Handle(req);
+            Assert.That(resp, Is.Not.Null);
+            Assert.That(resp.StatusCode, Is.EqualTo(200));
+            Assert.That(resp.ContentType, Is.EqualTo("application/json"));
+            Assert.That(resp.ContentLength, Is.GreaterThan(0));
+            
+            var body = GetBody(resp).ToString().Split("\n", StringSplitOptions.RemoveEmptyEntries).Last();
+            var json = JsonSerializer.Deserialize<TempsPaginatedListJson>(body);
+            Assert.IsNotNull(json);
+            Assert.That(json.PageSize, Is.EqualTo(20));
+            Assert.That(json.PageIndex, Is.EqualTo(1));
+            Assert.That(json.Skip, Is.EqualTo(0));
+        }
+        
+        [Test]
+        public void temp_plugin_return_specific_temps_pageindex_pagesize()
+        {
+            var ueb = CreateInstance();
+            var plugin = ueb.GetTemperaturePlugin();
+            Assert.That(plugin, Is.Not.Null, "IUEB6.GetTemperaturePlugin returned null");
+            var url = "/temperature/json?pageindex=2&pagesize=10";
+
+            var req = ueb.GetRequest(RequestHelper.GetValidRequestStream(url));
+            Assert.That(req, Is.Not.Null, "IUEB6.GetRequest returned null");
+
+            Assert.That(plugin.CanHandle(req), Is.GreaterThan(0).And.LessThanOrEqualTo(1));
+
+            var resp = plugin.Handle(req);
+            Assert.That(resp, Is.Not.Null);
+            Assert.That(resp.StatusCode, Is.EqualTo(200));
+            Assert.That(resp.ContentType, Is.EqualTo("application/json"));
+            Assert.That(resp.ContentLength, Is.GreaterThan(0));
+            
+            var body = GetBody(resp).ToString().Split("\n", StringSplitOptions.RemoveEmptyEntries).Last();
+            var json = JsonSerializer.Deserialize<TempsPaginatedListJson>(body);
+            Assert.IsNotNull(json);
+            Assert.That(json.PageSize, Is.EqualTo(10));
+            Assert.That(json.PageIndex, Is.EqualTo(2));
+            Assert.That(json.Skip, Is.EqualTo(10));
+        }
+        
+        [Test]
+        public void temp_plugin_return_temps_with_specific_date()
+        {
+            var ueb = CreateInstance();
+            var plugin = ueb.GetTemperaturePlugin();
+            Assert.That(plugin, Is.Not.Null, "IUEB6.GetTemperaturePlugin returned null");
+            var url = "/temperature/json/2019-12-01";
+
+            var req = ueb.GetRequest(RequestHelper.GetValidRequestStream(url));
+            Assert.That(req, Is.Not.Null, "IUEB6.GetRequest returned null");
+
+            Assert.That(plugin.CanHandle(req), Is.GreaterThan(0).And.LessThanOrEqualTo(1));
+
+            var resp = plugin.Handle(req);
+            Assert.That(resp, Is.Not.Null);
+            Assert.That(resp.StatusCode, Is.EqualTo(200));
+            Assert.That(resp.ContentType, Is.EqualTo("application/json"));
+            Assert.That(resp.ContentLength, Is.GreaterThan(0));
+            
+            var body = GetBody(resp).ToString().Split("\n", StringSplitOptions.RemoveEmptyEntries).Last();
+            var json = JsonSerializer.Deserialize<TempsPaginatedListJson>(body);
+            Assert.IsNotNull(json);
+            Assert.IsNotNull(json.Items);
+            
+            foreach (var temp in json.Items)
+            {
+                Assert.That(temp.DateTime.Date, Is.EqualTo(new DateTime(2019,12,01).Date));
+            }
+        }
+        
+        [Test]
+        public void temp_plugin_return_no_temps_with_wrong_date()
+        {
+            var ueb = CreateInstance();
+            var plugin = ueb.GetTemperaturePlugin();
+            Assert.That(plugin, Is.Not.Null, "IUEB6.GetTemperaturePlugin returned null");
+            var url = "/temperature/json/1500-12-01";
+
+            var req = ueb.GetRequest(RequestHelper.GetValidRequestStream(url));
+            Assert.That(req, Is.Not.Null, "IUEB6.GetRequest returned null");
+
+            Assert.That(plugin.CanHandle(req), Is.GreaterThan(0).And.LessThanOrEqualTo(1));
+
+            var resp = plugin.Handle(req);
+            Assert.That(resp, Is.Not.Null);
+            Assert.That(resp.StatusCode, Is.EqualTo(200));
+            Assert.That(resp.ContentType, Is.EqualTo("application/json"));
+            Assert.That(resp.ContentLength, Is.GreaterThan(0));
+            
+            var body = GetBody(resp).ToString().Split("\n", StringSplitOptions.RemoveEmptyEntries).Last();
+            var json = JsonSerializer.Deserialize<TempsPaginatedListJson>(body);
+            Assert.IsNotNull(json);
+            Assert.IsEmpty(json.Items);
+        }
+        
+        [Test]
+        public void temp_plugin_return_specific_temps_with_date_pageindex_pagesize()
+        {
+            var ueb = CreateInstance();
+            var plugin = ueb.GetTemperaturePlugin();
+            Assert.That(plugin, Is.Not.Null, "IUEB6.GetTemperaturePlugin returned null");
+            var url = "/temperature/json/2019-12-01?pageindex=2&pagesize=1";
+
+            var req = ueb.GetRequest(RequestHelper.GetValidRequestStream(url));
+            Assert.That(req, Is.Not.Null, "IUEB6.GetRequest returned null");
+
+            Assert.That(plugin.CanHandle(req), Is.GreaterThan(0).And.LessThanOrEqualTo(1));
+
+            var resp = plugin.Handle(req);
+            Assert.That(resp, Is.Not.Null);
+            Assert.That(resp.StatusCode, Is.EqualTo(200));
+            Assert.That(resp.ContentType, Is.EqualTo("application/json"));
+            Assert.That(resp.ContentLength, Is.GreaterThan(0));
+            
+            var body = GetBody(resp).ToString().Split("\n", StringSplitOptions.RemoveEmptyEntries).Last();
+            var json = JsonSerializer.Deserialize<TempsPaginatedListJson>(body);
+            Assert.IsNotNull(json);
+            Assert.That(json.PageSize, Is.EqualTo(1));
+            Assert.That(json.PageIndex, Is.EqualTo(2));
+            Assert.That(json.Skip, Is.EqualTo(1));
+            Assert.IsNotEmpty(json.Items);
+            
+            foreach (var temp in json.Items)
+            {
+                Assert.That(temp.DateTime.Date, Is.EqualTo(new DateTime(2019,12,01).Date));
+            }
+        }
+        
 
         [Test]
         public void db_connection_is_open()
@@ -107,7 +280,7 @@ namespace BIF.SWE1.UnitTests
 
             /*
              Test without Id
-             however can not be removed because we dont know the id
+             however data can not be removed because the id is not known
              
             var testEntity = new TempPlugin.TempModel
             {
