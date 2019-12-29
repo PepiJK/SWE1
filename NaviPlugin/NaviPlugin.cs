@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Xml;
 using BIF.SWE1.Interfaces;
@@ -37,7 +38,8 @@ namespace NaviPlugin
             }
             else
             {
-                if (req.Method == "GET" && req.Url.Parameter.ContainsKey("refresh") && req.Url.Parameter["refresh"] == "1")
+                if (req.Method == "GET" && req.Url.Parameter.ContainsKey("refresh") &&
+                    req.Url.Parameter["refresh"] == "1")
                 {
                     // reload the map
                     Thread t = new Thread(LoadMap);
@@ -50,7 +52,7 @@ namespace NaviPlugin
                 {
                     // return the cities of the provided street
                     string key = req.ContentString.Split("=").First();
-                    string value = req.ContentString.Split("=").Last();
+                    string value = RemoveInvalidChars(req.ContentString.Split("=").Last());
 
                     if (key == "street")
                     {
@@ -66,7 +68,8 @@ namespace NaviPlugin
                             if (amountOfCities > 0)
                             {
                                 var citiesJson = JsonSerializer.Serialize(_streetCities[value]);
-                                resp.SetContent("{\"msg\": \"" + amountOfCities + " Orte gefunden\", \"cities\": " + citiesJson + "}");
+                                resp.SetContent("{\"msg\": \"" + amountOfCities + " Orte gefunden\", \"cities\": " +
+                                                citiesJson + "}");
                             }
                         }
 
@@ -153,6 +156,22 @@ namespace NaviPlugin
 
                 Console.WriteLine("Finished loading!");
                 _loadingMap = false;
+            }
+        }
+
+        private string RemoveInvalidChars(string input)
+        {
+            // replace invalid chars with empty strings
+            // needed for special chars like ß (ContentString with ß also contains a square?)
+            try
+            {
+                return Regex.Replace(input, @"[^ \w\.@-]", "",
+                    RegexOptions.None, TimeSpan.FromSeconds(1.5));
+            }
+            // return empty string when regex timed out
+            catch (RegexMatchTimeoutException)
+            {
+                return String.Empty;
             }
         }
     }

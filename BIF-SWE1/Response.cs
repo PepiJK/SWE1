@@ -24,10 +24,10 @@ namespace BIF_SWE1
         };
 
         private int StatusCodeIntern { get; set; }
-        private string Content { get; set; }
+        private byte[] Content { get; set; }
 
         public IDictionary<string, string> Headers { get; } = new Dictionary<string, string>();
-        public int ContentLength { get; set; }
+        public int ContentLength => Content == null ? 0 : Content.Length;
         public string ContentType { get; set; }
 
         public int StatusCode
@@ -46,61 +46,64 @@ namespace BIF_SWE1
 
         public void SetContent(string content)
         {
-            ContentLength = Encoding.UTF8.GetByteCount(content);
-            Content = content;
+            Content = Encoding.UTF8.GetBytes(content);
         }
 
         public void SetContent(byte[] content)
         {
-            ContentLength = content.Length;
-            Content = Encoding.UTF8.GetString(content);
+            Content = content;
         }
 
         public void SetContent(Stream stream)
         {
-            ContentLength = (int) stream.Length;
-            Content = new StreamReader(stream).ReadToEnd();
+            using (MemoryStream ms = new MemoryStream())
+            {
+                stream.CopyTo(ms);
+                Content = ms.ToArray();
+            }
         }
 
         public void Send(Stream network)
         {
-            if (String.IsNullOrEmpty(Content) && !String.IsNullOrEmpty(ContentType))
+            if (ContentLength == 0 && !String.IsNullOrEmpty(ContentType))
             {
                 throw new Exception("ContentType is set but Content is not");
             }
 
             if (!String.IsNullOrEmpty(Status))
             {
-                StreamWriter sw = new StreamWriter(network);
+                using (StreamWriter sw = new StreamWriter(network, leaveOpen: true))
+                {
+                    sw.WriteLine("HTTP/1.1 " + Status);
+                    sw.WriteLine("Server: " + ServerHeader);
 
-                sw.WriteLine("HTTP/1.1 " + Status);
-                sw.WriteLine("Server: " + ServerHeader);
-                // important to set Connection: close header, otherwise files won't load
-                sw.WriteLine("Connection: close");
+                    // important to set Connection: close header, otherwise files won't load
+                    sw.WriteLine("Connection: close");
+
+                    if (ContentLength > 0)
+                    {
+                        sw.WriteLine("Content-Length: " + ContentLength);
+                    }
+
+                    if (!String.IsNullOrEmpty(ContentType))
+                    {
+                        sw.WriteLine("Content-Type: " + ContentType);
+                    }
+
+                    foreach (var header in Headers)
+                    {
+                        sw.WriteLine(header.Key + ": " + header.Value);
+                    }
+
+                    sw.WriteLine();
+                }
 
                 if (ContentLength > 0)
                 {
-                    sw.WriteLine("Content-Length: " + ContentLength);
+                    // need binary writer for images and pdfs
+                    using BinaryWriter bw = new BinaryWriter(network, Encoding.UTF8, true);
+                    bw.Write(Content, 0, ContentLength);
                 }
-
-                if (!String.IsNullOrEmpty(ContentType))
-                {
-                    sw.WriteLine("Content-Type: " + ContentType);
-                }
-
-                foreach (var header in Headers)
-                {
-                    sw.WriteLine(header.Key + ": " + header.Value);
-                }
-
-                sw.WriteLine("");
-
-                if (!String.IsNullOrEmpty(Content))
-                {
-                    sw.Write(Content);
-                }
-
-                sw.Flush();
             }
             else
             {
