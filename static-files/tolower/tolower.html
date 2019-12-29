@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!--Import Google Fonts-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Noto+Sans&display=swap" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link rel="stylesheet" href="../materialize/css/materialize.css" />
+    <!--Let browser know website is optimized for mobile-->
+    <!--Import my css -->
+    <link rel="stylesheet" href="../style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+
+<body>
+    <nav class="purple darken-4">
+        <div class="nav-wrapper container">
+            <a href="../index.html" class="brand-logo">BIF-SWE1</a>
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li><a href="tolower.html" class="swe-bbw">ToLower</a></li>
+                <li><a href="../navi/navi.html">Navi</a></li>
+                <li><a href="../temperature/temperature.html">Temperature</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- <img src="/img.jpg" alt="test"> -->
+
+    <main class="container">
+        <div class="white-text">
+            <h4>ToLower</h4>
+        </div>
+        <form id="toLowerForm">
+            <div class="row">
+                <div class="input-field col s12">
+                    <textarea id="toLowerTextarea" class="materialize-textarea white-text"></textarea>
+                    <label for="toLowerTextarea">Input</label>
+                </div>
+            </div>
+        </form>
+        <button class="btn waves-effect waves-light swe-submit-btn" onclick="submit()">Submit
+            <i class="material-icons right">send</i>
+        </button>
+    </main>
+
+    <footer class="white-text purple darken-4">
+        <div class="container row swe-footer">
+            <div class="col s12 l4 swe-footer-col swe-footer-align-l">&copy; Josef Koch, if18b061</div>
+            <div class="col s12 l4 swe-footer-col swe-footer-align-c">BIF3 | Verband C | Gruppe 1</div>
+            <div class="col s12 l4 swe-footer-col swe-footer-align-r">
+                <a href="https://www.technikum-wien.at" target="_blank" class="swe-footer-link swe-footer-align-r">FH
+                    Technikum</a>
+            </div>
+        </div>
+    </footer>
+
+    <!--JavaScript at end of body for optimized loading-->
+    <script type="text/javascript" src="../materialize/js/materialize.js"></script>
+    <script type="text/javascript" src="tolower.js"></script>
+</body>
+
+</html>

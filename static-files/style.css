@@ -1,0 +1,208 @@
+body {
+  font-family: 'Noto Sans' sans-serif;
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  background-color: #0e0e0e;
+}
+
+main {
+  padding-top: 2rem;
+  flex: 1 0;
+}
+
+h4 {
+  margin-top: 0;
+}
+
+.swe-footer {
+  padding-top: 1rem;
+  font-size: 1.25rem;
+}
+
+.swe-footer-link {
+  color: white;
+}
+
+.swe-footer-link:hover {
+  border-bottom: 3px solid white;
+}
+
+.swe-card-p {
+  padding-bottom: 1rem;
+}
+
+.swe-bbw {
+  border-bottom: 3px solid white;
+}
+
+/* label color */
+
+.input-field label {
+  color: white !important;
+}
+
+/* label focus color */
+
+.input-field textarea:focus+label {
+  color: white !important;
+}
+
+/* label underline focus color */
+
+.input-field textarea:focus {
+  border-bottom: 1px solid white !important;
+  box-shadow: 0 1px 0 0 #000 !important;
+}
+
+/* valid color */
+
+.input-field textarea.valid {
+  border-bottom: 1px solid white !important;
+  box-shadow: 0 1px 0 0 #000 !important;
+}
+
+/* invalid color */
+
+.input-field textarea.invalid {
+  border-bottom: 1px solid red !important;
+  box-shadow: 0 1px 0 0 #000 !important;
+}
+
+/* label focus color */
+.input-field input:focus + label {
+    color: white !important;
+}
+
+/* label underline focus color */
+.input-field input:focus {
+    border-bottom: 1px solid white !important;
+    box-shadow: 0 1px 0 0 #000 !important;
+}
+
+/* valid color */
+.input-field input.valid {
+    border-bottom: 1px solid white !important;
+    box-shadow: 0 1px 0 0 #000 !important;
+}
+
+/* invalid color */
+.input-field input.invalid {
+    border-bottom: 1px solid red !important;
+    box-shadow: 0 1px 0 0 #000 !important;
+}
+
+/* icon prefix focus color */
+
+.input-field .prefix.active {
+  color: white !important;
+}
+
+.swe-submit-btn {
+    background-color: #4A148C !important;
+}
+
+.swe-submit-btn:hover, .swe-submit-btn:active {
+    background-color: #401F7A !important;
+}
+
+.swe-reload-btn {
+    background-color: #808080 !important;
+    margin-right: 1.5rem;
+}
+
+.swe-reload-btn:hover, .swe-reload-btn:active {
+    background-color: #707070 !important;
+}
+
+.collection {
+    margin-bottom: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.collection-item {
+    color: white !important;
+    background-color: #0e0e0e !important;
+}
+
+
+
+.swe-footer-col {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+.swe-footer-align-c {
+  text-align: center;
+}
+
+.swe-footer-align-r {
+  text-align: center
+}
+
+.swe-footer-align-l {
+  text-align: center
+}
+
+@media(min-width: 992px) {
+  .swe-footer-align-r {
+    text-align: right;
+  }
+  .swe-footer-align-l {
+    text-align: left;
+  }
+}
+
+.swe-table {
+  margin-bottom: 2rem;
+}
+
+tr {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.5) !important;
+}
+
+.swe-temp-btn {
+  margin-top: 0.25rem;
+}
+
+.datepicker-date-display {
+  background-color: #4A148C !important;
+}
+
+.datepicker-day-button {
+  color: #0e0e0e !important;
+}
+
+.datepicker-table td.is-selected {
+  background-color: #4A148C !important;
+}
+
+.datepicker-table td.is-selected>.datepicker-day-button {
+  color: white !important;
+}
+
+.datepicker-cancel, .datepicker-clear, .datepicker-today, .datepicker-done {
+  color: #4A148C !important;
+}
+
+.pagination li a {
+  cursor: pointer !important;
+  color: white !important;
+}
+
+.pagination li.disabled a {
+  cursor: default !important;
+  color: #4b4b4b !important;
+}
+
+.pagination li.active {
+  background-color: #4A148C !important;
+}
+
+.pagination li.active a {
+  cursor: default !important;
+}
+
+.pagination {
+  margin-bottom: 1.5rem;
+}
