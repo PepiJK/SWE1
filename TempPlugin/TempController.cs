@@ -153,30 +153,7 @@ namespace TempPlugin
 
             return temperatures;
         }
-        
-        public int Count()
-        {
-            string queryString = "SELECT COUNT(*) FROM temperatures;";
-            int count = 0;
 
-            using (NpgsqlConnection connection = new NpgsqlConnection(_dbConnectionString))
-            {
-                connection.Open();
-                using NpgsqlCommand command = new NpgsqlCommand(queryString, connection);
-                using NpgsqlDataReader result = command.ExecuteReader();
-
-                // read the count
-                if (result.Read())
-                {
-                    count = Int16.Parse(result[0].ToString());
-                }
-
-                result.Close();
-            }
-
-            return count;
-        }
-        
         public TempPaginatedList GetTempsAsPaginatedList(int pageIndex, int pageSize)
         {
             var paginatedList = new TempPaginatedList(pageIndex, pageSize, Count());
@@ -211,7 +188,7 @@ namespace TempPlugin
         
         public TempPaginatedList GetTempsByDateAsPaginatedList(DateTime date, int pageIndex, int pageSize)
         {
-            var paginatedList = new TempPaginatedList(pageIndex, pageSize, Count());
+            var paginatedList = new TempPaginatedList(pageIndex, pageSize, CountByDate(date));
             string queryString = "SELECT * FROM temperatures WHERE datetime >= @startDate AND datetime < @endDate ORDER BY datetime DESC OFFSET @skip LIMIT @pageSize;";
             var temperatures = new List<TempModel>();
 
@@ -241,6 +218,54 @@ namespace TempPlugin
 
             paginatedList.Items = temperatures;
             return paginatedList;
+        }
+        
+        public int Count()
+        {
+            string queryString = "SELECT COUNT(*) FROM temperatures;";
+            int count = 0;
+
+            using (NpgsqlConnection connection = new NpgsqlConnection(_dbConnectionString))
+            {
+                connection.Open();
+                using NpgsqlCommand command = new NpgsqlCommand(queryString, connection);
+                using NpgsqlDataReader result = command.ExecuteReader();
+
+                // read the count
+                if (result.Read())
+                {
+                    count = Int16.Parse(result[0].ToString());
+                }
+
+                result.Close();
+            }
+
+            return count;
+        }
+
+        public int CountByDate(DateTime date)
+        {
+            string queryString = "SELECT COUNT(*) FROM temperatures WHERE datetime >= @startDate AND datetime < @endDate;";
+            int count = 0;
+
+            using (NpgsqlConnection connection = new NpgsqlConnection(_dbConnectionString))
+            {
+                connection.Open();
+                using NpgsqlCommand command = new NpgsqlCommand(queryString, connection);
+                command.Parameters.AddWithValue("startDate", date);
+                command.Parameters.AddWithValue("endDate", date.AddDays(1));
+                using NpgsqlDataReader result = command.ExecuteReader();
+
+                // read the count
+                if (result.Read())
+                {
+                    count = Int16.Parse(result[0].ToString());
+                }
+
+                result.Close();
+            }
+
+            return count;
         }
     }
 }

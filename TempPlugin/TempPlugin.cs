@@ -60,6 +60,9 @@ namespace TempPlugin
                     pageSize = 20;
                 }
 
+                if (pageIndex < 1) pageIndex = 1;
+                if (pageSize < 1) pageSize = 20;
+
                 var tempController = new TempController();
                 TempPaginatedList temps;
                 

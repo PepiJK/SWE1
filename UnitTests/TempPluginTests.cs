@@ -259,6 +259,9 @@ namespace BIF.SWE1.UnitTests
 
             var count = tempController.Count();
             Assert.AreEqual(1, count);
+            
+            var countDate = tempController.CountByDate(addEntity.DateTime);
+            Assert.AreEqual(1, countDate);
 
             var getEntity = tempController.GetTemp((int) addEntity.Id);
             Assert.IsNotNull(getEntity);
@@ -277,6 +280,9 @@ namespace BIF.SWE1.UnitTests
             
             count = tempController.Count();
             Assert.AreEqual(0, count);
+            
+            countDate = tempController.CountByDate(addEntity.DateTime);
+            Assert.AreEqual(0, countDate);
 
             /*
              Test without Id
