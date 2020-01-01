@@ -1,18 +1,18 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.Design;
 using System.IO;
 using System.Linq;
-using System.Net;
 using System.Reflection;
 using BIF.SWE1.Interfaces;
 
 namespace BIF_SWE1
 {
+    /// <summary>
+    /// PluginManager class that handles plugins which are loaded via assemblies from a directory.
+    /// </summary>
     public class PluginManager : IPluginManager
     {
-        private string _pluginPath;
-        private List<IPlugin> _plugins = new List<IPlugin>();
+        private readonly List<IPlugin> _plugins = new List<IPlugin>();
 
         public IEnumerable<IPlugin> Plugins => _plugins;
 
@@ -24,7 +24,8 @@ namespace BIF_SWE1
         public void Add(string plugin)
         {
             var type = Type.GetType(plugin);
-            var pluginInstance = (IPlugin) Activator.CreateInstance(type);
+            var pluginInstance =
+                (IPlugin) Activator.CreateInstance(type ?? throw new NullReferenceException("plugin type is null"));
             Add(pluginInstance);
         }
 
@@ -33,13 +34,16 @@ namespace BIF_SWE1
             _plugins.Clear();
         }
 
+        /// <summary>
+        /// Loads Plugins from directory path and add it to Plugins list.
+        /// </summary>
+        /// <param name="pluginsPath"></param>
+        /// <exception cref="Exception"></exception>
         public PluginManager(string pluginsPath = "./plugins")
         {
-            _pluginPath = pluginsPath;
-
             if (File.Exists(pluginsPath)) throw new Exception("Expected directory, not a file");
             if (!Directory.Exists(pluginsPath))
-                throw new Exception("Directory \"" + Path.GetFullPath(pluginsPath) + "\" does not exist");
+                throw new DirectoryNotFoundException();
 
             // load each dll file in Plugin Directory, create plugin, add it to Plugins List
             string[] fileEntries = Directory.GetFiles(pluginsPath, "*.dll");
@@ -55,15 +59,8 @@ namespace BIF_SWE1
             }
         }
 
-        public IPlugin GetSpecificPlugin(string pluginPath)
-        {
-            Assembly pluginAssembly = LoadPlugin(pluginPath);
-            return CreatePlugins(pluginAssembly).First();
-        }
-
         private static Assembly LoadPlugin(string relativePath)
         {
-            // Console.WriteLine($"Loading plugins from: {relativePath}");
             PluginLoadContext loadContext = new PluginLoadContext(relativePath);
             if (File.Exists(relativePath))
             {

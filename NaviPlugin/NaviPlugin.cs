@@ -11,6 +11,11 @@ using BIF_SWE1;
 
 namespace NaviPlugin
 {
+    /// <summary>
+    /// NaviPlugin class that processes a navi specific request,
+    /// loads and processes a xml map
+    /// and returns a list of cities of the provided street as json.
+    /// </summary>
     public class NaviPlugin : IPlugin
     {
         private const string Url = "/navi";
@@ -88,12 +93,18 @@ namespace NaviPlugin
             return resp;
         }
 
+        /// <summary>
+        /// Load the map file in a new thread.
+        /// </summary>
         public NaviPlugin()
         {
             Thread t = new Thread(LoadMap);
             t.Start();
         }
 
+        /// <summary>
+        /// Load the map file and process the xml nodes reading the cities and streets.
+        /// </summary>
         private void LoadMap()
         {
             XmlReaderSettings settings = new XmlReaderSettings();
@@ -159,7 +170,7 @@ namespace NaviPlugin
             }
         }
 
-        private string RemoveInvalidChars(string input)
+        private static string RemoveInvalidChars(string input)
         {
             // replace invalid chars with empty strings
             // needed for special chars like ß (ContentString with ß also contains a square?)

@@ -4,12 +4,21 @@ using System.Runtime.Loader;
 
 namespace BIF_SWE1
 {
-    // https://docs.microsoft.com/en-us/dotnet/core/tutorials/creating-app-with-plugin-support
-    // dotnet core 3.0 required
-    class PluginLoadContext : AssemblyLoadContext
+    /// <summary>
+    /// PluginLoadContext class that is handling assemblies.
+    /// Create a custom AssemblyLoadContext to load each plugin.
+    /// Use the System.Runtime.Loader.AssemblyDependencyResolver type to allow plugins to have dependencies.
+    /// Code used from https://docs.microsoft.com/en-us/dotnet/core/tutorials/creating-app-with-plugin-support.
+    /// Dotnet Core 3.0 or newer required.
+    /// </summary>
+    public class PluginLoadContext : AssemblyLoadContext
     {
-        private AssemblyDependencyResolver _resolver;
+        private readonly AssemblyDependencyResolver _resolver;
 
+        /// <summary>
+        /// Create AssemblyDependencyResolver
+        /// </summary>
+        /// <param name="pluginPath"></param>
         public PluginLoadContext(string pluginPath)
         {
             _resolver = new AssemblyDependencyResolver(pluginPath);

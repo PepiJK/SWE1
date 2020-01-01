@@ -8,6 +8,11 @@ using BIF_SWE1;
 
 namespace TempPlugin
 {
+    /// <summary>
+    /// TempPlugin class that handles temperature specific requests,
+    /// writes data in the database,
+    /// returns a paginated list of temperature entities as json.
+    /// </summary>
     public class TempPlugin : IPlugin
     {
         private const string Url = "/temperature";
@@ -42,7 +47,7 @@ namespace TempPlugin
             else if (req.Url.Segments[1] == "json")
             {
                 int pageIndex, pageSize;
-                
+
                 try
                 {
                     pageIndex = Int16.Parse(req.Url.Parameter["pageindex"]);
@@ -51,6 +56,7 @@ namespace TempPlugin
                 {
                     pageIndex = 1;
                 }
+
                 try
                 {
                     pageSize = Int16.Parse(req.Url.Parameter["pagesize"]);
@@ -65,11 +71,11 @@ namespace TempPlugin
 
                 var tempController = new TempController();
                 TempPaginatedList temps;
-                
+
                 if (req.Url.Segments.Length == 3)
                 {
                     DateTime date;
-                    
+
                     try
                     {
                         date = DateTime.Parse(req.Url.Segments[2]);
@@ -78,7 +84,7 @@ namespace TempPlugin
                     {
                         date = DateTime.Today;
                     }
-                    
+
                     temps = tempController.GetTempsByDateAsPaginatedList(date, pageIndex, pageSize);
                 }
                 else
@@ -96,6 +102,9 @@ namespace TempPlugin
             return resp;
         }
 
+        /// <summary>
+        /// Read temperature data in a separate thread.
+        /// </summary>
         public TempPlugin()
         {
             Thread t = new Thread(ReadSensor);

@@ -4,6 +4,9 @@ using BIF_SWE1;
 
 namespace TestPlugin
 {
+    /// <summary>
+    /// TestPlugin handles simple request and returns simple text response.
+    /// </summary>
     public class TestPlugin : IPlugin
     {
         public float CanHandle(IRequest req)

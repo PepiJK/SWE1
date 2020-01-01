@@ -8,6 +8,9 @@ using BIF.SWE1.Interfaces;
 
 namespace BIF_SWE1
 {
+    /// <summary>
+    /// Request class that processes data of a http request.
+    /// </summary>
     public class Request : IRequest
     {
         private readonly string[] _validRequestMethods =
@@ -19,12 +22,16 @@ namespace BIF_SWE1
         public IDictionary<string, string> Headers { get; } = new Dictionary<string, string>();
         public string UserAgent => Headers.ContainsKey("user-agent") ? Headers["user-agent"] : null;
         public int HeaderCount { get; }
-        public int ContentLength => Headers.ContainsKey("content-length") ? Int32.Parse(Headers["content-length"]) : 0;
+        public int ContentLength => Headers.ContainsKey("content-length") ? int.Parse(Headers["content-length"]) : 0;
         public string ContentType => Headers.ContainsKey("content-type") ? Headers["content-type"] : null;
         public Stream ContentStream => ContentBytes != null ? new MemoryStream(ContentBytes) : null;
         public string ContentString => ContentBytes != null ? Encoding.UTF8.GetString(ContentBytes) : null;
         public byte[] ContentBytes { get; }
 
+        /// <summary>
+        /// Reads network stream line by line and process information.
+        /// </summary>
+        /// <param name="network"></param>
         public Request(Stream network)
         {
             IsValid = false;
@@ -52,7 +59,7 @@ namespace BIF_SWE1
                         // read each line of req till empty line
                         while (true)
                         {
-                            networkLine = networkReader.ReadLine().Trim();
+                            networkLine = networkReader.ReadLine()?.Trim();
                             if (String.IsNullOrEmpty(networkLine)) break;
 
                             HeaderCount++;

@@ -12,7 +12,7 @@ namespace BIF_SWE1
         private const int Port = 8080;
         private static readonly PluginManager PluginManager = new PluginManager();
 
-        static void Main(string[] args)
+        static void Main()
         {
             Console.WriteLine("BIF-SWE1 WebServer");
             TcpListener listener = new TcpListener(IPAddress.Any, Port);

@@ -6,6 +6,9 @@ using BIF.SWE1.Interfaces;
 
 namespace BIF_SWE1
 {
+    /// <summary>
+    /// Url class that processes an URL string.
+    /// </summary>
     public class Url : IUrl
     {
         private readonly string _path;
@@ -19,20 +22,24 @@ namespace BIF_SWE1
         public string Extension => FileName != "" ? "." + FileName.Split(".").Last() : "";
         public string Fragment => RawUrl.Contains("#") ? RawUrl.Split("#").Last() : "";
 
+        /// <summary>
+        /// Process URL path string.
+        /// </summary>
+        /// <param name="path"></param>
         public Url(string path)
         {
             _path = path;
             ParameterCount = 0;
 
             // process url parameters
-            string[] splitUrlQuestionmark = RawUrl.Split('?');
+            string[] splitUrlQuestionMark = RawUrl.Split('?');
 
             // url contains one ? and is not empty or null before and after ?
-            if (splitUrlQuestionmark.Length == 2 && !String.IsNullOrEmpty(splitUrlQuestionmark[0]) &&
-                !String.IsNullOrEmpty(splitUrlQuestionmark[1]))
+            if (splitUrlQuestionMark.Length == 2 && !String.IsNullOrEmpty(splitUrlQuestionMark[0]) &&
+                !String.IsNullOrEmpty(splitUrlQuestionMark[1]))
             {
                 // split at & and remove fragments
-                string[] splitUrlParams = splitUrlQuestionmark[1].Split("&");
+                string[] splitUrlParams = splitUrlQuestionMark[1].Split("&");
                 splitUrlParams[splitUrlParams.GetUpperBound(0)] = splitUrlParams.Last().Split("#").First();
 
                 foreach (var param in splitUrlParams)

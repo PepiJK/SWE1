@@ -10,6 +10,9 @@ using BIF_SWE1;
 
 namespace StaticFilePlugin
 {
+    /// <summary>
+    /// StaticFilePlugin class that processes a request and returns a file.
+    /// </summary>
     public class StaticFilePlugin : IPlugin
     {
         private const string StaticFilesPath = "./static-files";

@@ -8,6 +8,9 @@ using BIF.SWE1.Interfaces;
 
 namespace BIF_SWE1
 {
+    /// <summary>
+    /// Response class that processes data of a http response.
+    /// </summary>
     public class Response : IResponse
     {
         private readonly IDictionary<int, string> _validStatusCodes = new Dictionary<int, string>()
@@ -16,6 +19,9 @@ namespace BIF_SWE1
             {500, "500 Internal Server Error"}, {503, "503 Service Unavailable"}, {501, "501 Not Implemented"}
         };
 
+        /// <summary>
+        /// Dictionary of all the supported content types.
+        /// </summary>
         public readonly IDictionary<string, string> ValidContentTypes = new Dictionary<string, string>()
         {
             {"html", "text/html; charset=UTF-8"}, {"txt", "text/plain"}, {"css", "text/css"}, {"png", "image/png"},
@@ -33,7 +39,7 @@ namespace BIF_SWE1
         public int StatusCode
         {
             get => StatusCodeIntern == 0
-                ? throw new Exception("StatusCode is 0, which means it was probably not set")
+                ? throw new NullReferenceException("StatusCode is 0, which means it was probably not set")
                 : StatusCodeIntern;
             set => StatusCodeIntern = value;
         }
@@ -104,10 +110,6 @@ namespace BIF_SWE1
                     using BinaryWriter bw = new BinaryWriter(network, Encoding.UTF8, true);
                     bw.Write(Content, 0, ContentLength);
                 }
-            }
-            else
-            {
-                throw new Exception("Status is not set");
             }
         }
 

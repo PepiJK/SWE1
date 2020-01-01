@@ -5,6 +5,9 @@ using BIF_SWE1;
 
 namespace ToLowerPlugin
 {
+    /// <summary>
+    /// ToLowerPlugin class that handles tolower specific requests and returns lowercase string.
+    /// </summary>
     public class ToLowerPlugin : IPlugin
     {
         public float CanHandle(IRequest req)
@@ -24,7 +27,7 @@ namespace ToLowerPlugin
             String[] respString = req.ContentString.Split("=", StringSplitOptions.RemoveEmptyEntries);
             resp.SetContent(respString.Length == 2 ? respString[1].ToLower() : "Bitte geben Sie einen Text ein");
             resp.ContentType = resp.ValidContentTypes["txt"];
-            
+
             return resp;
         }
     }
