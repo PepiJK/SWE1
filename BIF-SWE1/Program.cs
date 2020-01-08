@@ -78,6 +78,7 @@ namespace BIF_SWE1
                 Console.WriteLine(e);
                 res = new Response {StatusCode = 500};
                 res.ContentType = res.ValidContentTypes["txt"];
+                res.SetContent(e.ToString());
                 res.Send(stream);
             }
 

@@ -26,7 +26,7 @@ namespace TempPlugin
         /// Insert a row containing either an id, timestamp and value or only a timestamp and value into the table.
         /// </summary>
         /// <param name="entity"></param>
-        /// <returns></returns>
+        /// <returns>Boolean, if entity has successfully been added</returns>
         public bool AddTemp(TempModel entity)
         {
             bool successfullyExecuted = false;
@@ -63,7 +63,7 @@ namespace TempPlugin
         /// Delete a row from the table with a specific id.
         /// </summary>
         /// <param name="id"></param>
-        /// <returns></returns>
+        /// <returns>Boolean, if entity has successfully been removed</returns>
         public bool RemoveTemp(int id)
         {
             string queryString = "DELETE FROM temperatures WHERE id = @id;";
@@ -86,11 +86,11 @@ namespace TempPlugin
         /// Return the id, datetime and value of a row with a specific id. Return null when specified id is not found.
         /// </summary>
         /// <param name="id"></param>
-        /// <returns></returns>
+        /// <returns>A new TempModel Object</returns>
         public TempModel GetTemp(int id)
         {
             string queryString = "SELECT * FROM temperatures WHERE id = @id;";
-            TempModel entity = new TempModel();
+            TempModel entity;
 
             using (NpgsqlConnection connection = new NpgsqlConnection(_dbConnectionString))
             {
@@ -103,9 +103,12 @@ namespace TempPlugin
                 // return null if record does not exist
                 if (result.Read())
                 {
-                    entity.Id = Int16.Parse(result[0].ToString());
-                    entity.DateTime = DateTime.Parse(result[1].ToString());
-                    entity.Value = float.Parse(result[2].ToString());
+                    entity = new TempModel
+                    {
+                        Id = int.Parse(result[0].ToString()),
+                        DateTime = DateTime.Parse(result[1].ToString()),
+                        Value = float.Parse(result[2].ToString())
+                    };
                     result.Close();
                 }
                 else
@@ -121,7 +124,7 @@ namespace TempPlugin
         /// <summary>
         /// Return a list of rows containing id, datetime and value.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A new Enumerable TempModel Object</returns>
         public IEnumerable<TempModel> GetTemps()
         {
             string queryString = "SELECT * FROM temperatures ORDER BY datetime DESC;";
@@ -138,7 +141,7 @@ namespace TempPlugin
                 {
                     temperatures.Add(new TempModel
                     {
-                        Id = Int16.Parse(result[0].ToString()),
+                        Id = int.Parse(result[0].ToString()),
                         DateTime = DateTime.Parse(result[1].ToString()),
                         Value = float.Parse(result[2].ToString())
                     });
@@ -154,7 +157,7 @@ namespace TempPlugin
         /// Return a list of rows containing id, datetime and value of a specified date.
         /// </summary>
         /// <param name="date"></param>
-        /// <returns></returns>
+        /// <returns>A new Enumerable TempModel Object</returns>
         public IEnumerable<TempModel> GetTempsByDate(DateTime date)
         {
             string queryString =
@@ -174,7 +177,7 @@ namespace TempPlugin
                 {
                     temperatures.Add(new TempModel
                     {
-                        Id = Int16.Parse(result[0].ToString()),
+                        Id = int.Parse(result[0].ToString()),
                         DateTime = DateTime.Parse(result[1].ToString()),
                         Value = float.Parse(result[2].ToString())
                     });
@@ -191,7 +194,7 @@ namespace TempPlugin
         /// </summary>
         /// <param name="pageIndex"></param>
         /// <param name="pageSize"></param>
-        /// <returns></returns>
+        /// <returns>A new TempPaginatedList Object</returns>
         public TempPaginatedList GetTempsAsPaginatedList(int pageIndex, int pageSize)
         {
             var paginatedList = new TempPaginatedList(pageIndex, pageSize, Count());
@@ -211,7 +214,7 @@ namespace TempPlugin
                 {
                     temperatures.Add(new TempModel
                     {
-                        Id = Int16.Parse(result[0].ToString()),
+                        Id = int.Parse(result[0].ToString()),
                         DateTime = DateTime.Parse(result[1].ToString()),
                         Value = float.Parse(result[2].ToString())
                     });
@@ -230,7 +233,7 @@ namespace TempPlugin
         /// <param name="date"></param>
         /// <param name="pageIndex"></param>
         /// <param name="pageSize"></param>
-        /// <returns></returns>
+        /// <returns>A new TempPaginatedList Object</returns>
         public TempPaginatedList GetTempsByDateAsPaginatedList(DateTime date, int pageIndex, int pageSize)
         {
             var paginatedList = new TempPaginatedList(pageIndex, pageSize, CountByDate(date));
@@ -253,7 +256,7 @@ namespace TempPlugin
                 {
                     temperatures.Add(new TempModel
                     {
-                        Id = Int16.Parse(result[0].ToString()),
+                        Id = int.Parse(result[0].ToString()),
                         DateTime = DateTime.Parse(result[1].ToString()),
                         Value = float.Parse(result[2].ToString())
                     });
@@ -269,7 +272,7 @@ namespace TempPlugin
         /// <summary>
         /// Return the number of rows in the table.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The amount off rows in table</returns>
         public int Count()
         {
             string queryString = "SELECT COUNT(*) FROM temperatures;";
@@ -284,7 +287,7 @@ namespace TempPlugin
                 // read the count
                 if (result.Read())
                 {
-                    count = Int16.Parse(result[0].ToString());
+                    count = int.Parse(result[0].ToString());
                 }
 
                 result.Close();
@@ -296,7 +299,7 @@ namespace TempPlugin
         /// <summary>
         /// Return the number of rows in the table of a specified date.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The amount off rows in table</returns>
         public int CountByDate(DateTime date)
         {
             string queryString =
@@ -314,7 +317,7 @@ namespace TempPlugin
                 // read the count
                 if (result.Read())
                 {
-                    count = Int16.Parse(result[0].ToString());
+                    count = int.Parse(result[0].ToString());
                 }
 
                 result.Close();
